@@ -18,11 +18,12 @@ import static pt.unips.estsetubal.tapoo.model.FileSystemItem.folder;
 class TreeAlgorithmsTest {
     private Tree<FileSystemItem> tree;
     private TreeAlgorithms<FileSystemItem> algorithms;
+    private Position<FileSystemItem> computer;
 
     @BeforeEach
     void setUp() {
         tree = new TreeImpl<>();
-        Position<FileSystemItem> computer = tree.insert(null, folder("Computador"));
+        computer = tree.insert(null, folder("Computador"));
         Position<FileSystemItem> documents = tree.insert(computer, folder("Documentos"));
         Position<FileSystemItem> images = tree.insert(computer, folder("Imagens"));
         tree.insert(documents, file("aulas.pdf"));
@@ -31,55 +32,15 @@ class TreeAlgorithmsTest {
         algorithms = new TreeAlgorithms<>(tree);
     }
 
-    // Percurso A — Estrutura
+    // Percurso A
 
-    @Disabled("Percurso A: retirar depois de implementar countLeaves")
+    @Disabled("Percurso A: retirar depois de implementar countInternals")
     @Test
-    void countsTheThreeFilesAsLeaves() {
-        assertEquals(3, algorithms.countLeaves());
+    void countsTheThreeInternalNodes() {
+        assertEquals(3, algorithms.countInternals());
     }
 
-    @Disabled("Percurso A: retirar depois de implementar height")
-    @Test
-    void fileSystemHasHeightTwo() {
-        assertEquals(2, algorithms.height());
-        assertEquals(-1, new TreeAlgorithms<>(new TreeImpl<>()).height());
-    }
-
-    @Disabled("Percurso A: retirar depois de implementar elementsAtLevel")
-    @Test
-    void levelOneContainsTheTwoFolders() {
-        assertEquals(List.of(folder("Documentos"), folder("Imagens")),
-                algorithms.elementsAtLevel(1));
-        assertTrue(algorithms.elementsAtLevel(-1).isEmpty());
-    }
-
-    // Percurso B — Pesquisa
-
-    @Disabled("Percurso B: retirar depois de implementar contains")
-    @Test
-    void findsExistingElementAndRejectsMissingElement() {
-        assertTrue(algorithms.contains(file("aulas.pdf")));
-        assertFalse(algorithms.contains(file("inexistente.txt")));
-    }
-
-    @Disabled("Percurso B: retirar depois de implementar countMatching")
-    @Test
-    void countsFoldersUsingAPredicate() {
-        assertEquals(3, algorithms.countMatching(FileSystemItem::isFolder));
-    }
-
-    @Disabled("Percurso B: retirar depois de implementar pathTo")
-    @Test
-    void pathContainsRootFolderAndFile() {
-        assertEquals(List.of(folder("Computador"), folder("Documentos"), file("aulas.pdf")),
-                algorithms.pathTo(file("aulas.pdf")));
-        assertTrue(algorithms.pathTo(file("inexistente.txt")).isEmpty());
-    }
-
-    // Percurso C — Percursos
-
-    @Disabled("Percurso C: retirar depois de implementar preOrder")
+    @Disabled("Percurso A: retirar depois de implementar preOrder")
     @Test
     void preOrderVisitsParentBeforeChildren() {
         assertEquals(List.of(folder("Computador"), folder("Documentos"),
@@ -87,7 +48,23 @@ class TreeAlgorithmsTest {
                 file("ferias.jpg")), algorithms.preOrder());
     }
 
-    @Disabled("Percurso C: retirar depois de implementar postOrder")
+    @Disabled("Percurso A: retirar depois de implementar pathTo")
+    @Test
+    void pathContainsRootFolderAndFile() {
+        assertEquals(List.of(folder("Computador"), folder("Documentos"), file("aulas.pdf")),
+                algorithms.pathTo(file("aulas.pdf")));
+        assertTrue(algorithms.pathTo(file("inexistente.txt")).isEmpty());
+    }
+
+    // Percurso B
+
+    @Disabled("Percurso B: retirar depois de implementar countNodesWithDegree2")
+    @Test
+    void countsNodesWithExactlyTwoChildren() {
+        assertEquals(2, algorithms.countNodesWithDegree2());
+    }
+
+    @Disabled("Percurso B: retirar depois de implementar postOrder")
     @Test
     void postOrderVisitsChildrenBeforeParent() {
         assertEquals(List.of(file("aulas.pdf"), file("notas.txt"),
@@ -95,13 +72,35 @@ class TreeAlgorithmsTest {
                 folder("Computador")), algorithms.postOrder());
     }
 
-    @Disabled("Percurso C: retirar depois de implementar toIndentedString")
+    @Disabled("Percurso B: retirar depois de implementar elementsAtLevel")
     @Test
-    void indentedRepresentationReflectsLevels() {
-        String expected = String.join(System.lineSeparator(),
-                "Computador", "- Documentos", "  - aulas.pdf", "  - notas.txt",
-                "- Imagens", "  - ferias.jpg") + System.lineSeparator();
-        assertEquals(expected, algorithms.toIndentedString());
+    void levelOneContainsTheTwoFolders() {
+        assertEquals(List.of(folder("Documentos"), folder("Imagens")),
+                algorithms.elementsAtLevel(1));
+        assertTrue(algorithms.elementsAtLevel(-1).isEmpty());
+    }
+
+    // Percurso C
+
+    @Disabled("Percurso C: retirar depois de implementar countNodesWithDegreeGreaterThan2")
+    @Test
+    void countsNodesWithMoreThanTwoChildren() {
+        tree.insert(computer, folder("Transferências"));
+        assertEquals(1, algorithms.countNodesWithDegreeGreaterThan2());
+    }
+
+    @Disabled("Percurso C: retirar depois de implementar contains")
+    @Test
+    void findsExistingElementAndRejectsMissingElement() {
+        assertTrue(algorithms.contains(file("aulas.pdf")));
+        assertFalse(algorithms.contains(file("inexistente.txt")));
+    }
+
+    @Disabled("Percurso C: retirar depois de implementar height")
+    @Test
+    void fileSystemHasHeightTwo() {
+        assertEquals(2, algorithms.height());
+        assertEquals(-1, new TreeAlgorithms<>(new TreeImpl<>()).height());
     }
 
     @Test

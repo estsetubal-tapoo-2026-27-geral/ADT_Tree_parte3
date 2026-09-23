@@ -58,50 +58,37 @@ src
 | Como se faz a chamada sobre um problema menor? | |
 | Como se combinam ou propagam os resultados? | |
 
-## 2. Percurso A — Estrutura
+## 2. Percurso A
 
 Implemente os três métodos seguintes:
 
-1. `countLeaves()` — devolve o número de folhas da árvore;
-2. `height()` — devolve `-1` para uma árvore vazia, `0` para uma árvore com apenas a raiz e, nos restantes casos, o maior nível existente;
-3. `elementsAtLevel(int level)` — devolve, da esquerda para a direita, os elementos que se encontram no nível indicado. Um nível negativo devolve uma lista vazia.
+1. `countInternals()` — devolve o número de nós internos, isto é, posições que têm pelo menos um filho;
+2. `preOrder()` — devolve os elementos em pré-ordem;
+3. `pathTo(E target)` — devolve o caminho entre a raiz e a primeira ocorrência do alvo em pré-ordem; se não existir, devolve uma lista vazia.
+
+No método `pathTo`, a solução deverá desfazer a última escolha quando uma subárvore não contém o alvo.
 
 Retire `@Disabled` aos testes identificados com **Percurso A** e acrescente pelo menos um teste relevante por método.
 
-## 3. Percurso B — Pesquisa
+## 3. Percurso B
 
 Implemente os três métodos seguintes:
 
-1. `contains(E target)` — indica se existe um elemento igual ao alvo;
-2. `countMatching(Predicate<E> predicate)` — conta os elementos que satisfazem o predicado;
-3. `pathTo(E target)` — devolve o caminho entre a raiz e a primeira ocorrência do alvo em pré-ordem; se não existir, devolve uma lista vazia.
-
-> Para compreender o funcionamento de `Predicate<E>`, consulte
-> [Utilização de Predicate em Java](docs/predicate.md).
-
-> No método `pathTo`, a solução deverá desfazer a última escolha quando uma subárvore não contém o alvo.
-
+1. `countNodesWithDegree2()` — devolve o número de posições que têm exatamente dois filhos;
+2. `postOrder()` — devolve os elementos em pós-ordem;
+3. `elementsAtLevel(int level)` — devolve, da esquerda para a direita, os elementos que se encontram no nível indicado. Um nível negativo devolve uma lista vazia.
 
 Retire `@Disabled` aos testes identificados com **Percurso B** e acrescente pelo menos um teste relevante por método.
 
-## 4. Percurso C — Percursos
+## 4. Percurso C
 
 Implemente os três métodos seguintes:
 
-1. `preOrder()` — devolve os elementos em pré-ordem;
-2. `postOrder()` — devolve os elementos em pós-ordem;
-3. `toIndentedString()` — devolve uma linha por elemento, com dois espaços por nível antes de `- `. A raiz não tem hífen.
+1. `countNodesWithDegreeGreaterThan2()` — devolve o número de posições que têm mais de dois filhos;
+2. `contains(E target)` — indica se existe um elemento igual ao alvo;
+3. `height()` — devolve `-1` para uma árvore vazia, `0` para uma árvore com apenas a raiz e, nos restantes casos, o maior nível existente.
 
-Exemplo de representação indentada:
-
-```text
-Computador
-- Documentos
-  - aulas.pdf
-  - notas.txt
-- Imagens
-  - ferias.jpg
-```
+Na árvore inicial, nenhum nó tem grau superior a dois. Acrescente temporariamente um terceiro filho a `Computador` para testar o primeiro método deste percurso.
 
 Retire `@Disabled` aos testes identificados com **Percurso C** e acrescente pelo menos um teste relevante por método.
 
@@ -115,25 +102,7 @@ Retire `@Disabled` aos testes identificados com **Percurso C** e acrescente pelo
 - Não utilize `tree.elements()` para resolver os exercícios.
 - Cada chamada recursiva deve avançar para um filho da posição atual.
 
-## 6. Testar e analisar
-
-Além dos testes fornecidos, considere:
-
-- árvore vazia;
-- árvore constituída apenas pela raiz;
-- nó com vários filhos;
-- árvore com alturas diferentes nas subárvores;
-- nível inexistente;
-- elemento ou predicado sem correspondências;
-- primeira ocorrência quando existem elementos repetidos.
-
-Para cada método, determine:
-
-- o número máximo de posições visitadas;
-- a complexidade temporal no pior caso;
-- a profundidade máxima da pilha de chamadas.
-
-## 7. Preparar a apresentação
+## 6. Preparar a apresentação
 
 Na última hora da aula, cada grupo apresenta uma das soluções. A apresentação deve incluir:
 
@@ -143,6 +112,26 @@ Na última hora da aula, cada grupo apresenta uma das soluções. A apresentaç�
 4. um teste normal e um caso-limite;
 5. complexidade temporal e espaço da pilha;
 6. dificuldade encontrada ou solução alternativa.
+
+## 7. Generalização após as apresentações
+
+Os três percursos incluem um método de contagem:
+
+```java
+countInternals()
+countNodesWithDegree2()
+countNodesWithDegreeGreaterThan2()
+```
+
+Depois das apresentações, compare as implementações e identifique o que se mantém e o que varia. O percurso recursivo é semelhante; apenas muda a condição que determina se a posição atual deve ser contada.
+
+Esse padrão pode ser generalizado através de:
+
+```java
+int countMatching(Predicate<Position<E>> predicate)
+```
+
+O `Predicate` recebe uma posição e devolve `true` quando essa posição satisfaz a condição de contagem. Esta generalização será discutida nas conclusões da aula e não faz parte dos três exercícios iniciais.
 
 ## Critérios de conclusão
 
@@ -155,4 +144,3 @@ A atividade fica concluída quando:
 - a solução usa apenas o contrato público do ADT;
 - o grupo consegue justificar a terminação, a correção e a complexidade dos algoritmos;
 - a apresentação está preparada e pode ser executada no tempo definido pela docente.
-
