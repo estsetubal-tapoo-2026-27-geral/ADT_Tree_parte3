@@ -131,16 +131,26 @@ public class TreeImpl<E> implements Tree<E> {
     @Override
     public E remove(Position<E> position) {
         TreeNode node = checkPosition(position);
+
+        if (!node.children.isEmpty()) {
+            throw new IllegalStateException(
+                    "Só é possível remover um nó folha."
+            );
+        }
+
         E removed = node.element;
-        if (node == root) root = null;
-        else node.parent.children.remove(node);
+
+        if (node == root) {
+            root = null;
+        } else {
+            node.parent.children.remove(node);
+        }
+
         invalidate(node);
         return removed;
     }
 
     private void invalidate(TreeNode node) {
-        for (TreeNode child : node.children) invalidate(child);
-        node.children.clear();
         node.parent = null;
         node.valid = false;
     }
