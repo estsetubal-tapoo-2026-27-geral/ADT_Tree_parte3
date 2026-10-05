@@ -1,4 +1,4 @@
-## Atividade complementar — Percursos iterativos com Stack e Queue
+# Atividade complementar — Percursos iterativos com Stack e Queue
 
 Nesta atividade, explore como percorrer uma árvore sem chamadas recursivas. Implemente os métodos em `TreeAlgorithms<E>`, usando apenas as operações públicas de `Tree<E>` e posições do tipo `Position<E>`.
 
