@@ -47,17 +47,19 @@ src
 ## 1. Preparar o trabalho
 
 1. Execute `mvn test` e confirme que o projeto inicial compila.
-2. Reveja os métodos recursivos já implementados: `size()`, `collectElementsPreOrder()`, 
-3. Para cada um dos métodos acime preencha a tabela abaixo.
+2. Reveja os métodos recursivos já implementados: `size()` e `collectElementsPreOrder()`.
+3. Para cada um dos métodos acima preencha a tabela abaixo.
+
 | Questão | Resposta do grupo |
 |---|---|
 | Qual é a raiz da subárvore processada? | |
 | Qual é o caso base? | |
 | Como se faz a chamada sobre um problema menor? | |
 | Como se combinam ou propagam os resultados? | |
+
 4. Abra `TreeAlgorithms.java` e identifique os métodos marcados com `TODO A2.3`.
-4. Consulte `TreeAlgorithmsTest.java` e localize os testes do percurso atribuído ao grupo.
-5. Para cada exercício, registe antes de programar:
+5. Consulte `TreeAlgorithmsTest.java` e localize os testes do percurso atribuído ao grupo.
+6. Para cada exercício, registe antes de programar:
 
 | Questão | Resposta do grupo |
 |---|---|
